@@ -35,7 +35,6 @@ This project can be run in:
 
 ## How to Run
 
-Option 1: Run directly
+Run directly
 
-```bash
-python main.py
+
