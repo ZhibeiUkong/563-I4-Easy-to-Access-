@@ -1,7 +1,15 @@
+import subprocess
+import sys
+
+def install(package):
+    subprocess.check_call([sys.executable, "-m", "pip", "install", package])
+
+for package in ["requests", "pandas", "beautifulsoup4"]:
+    install(package)
+
 import requests
 import pandas as pd
 from bs4 import BeautifulSoup
-from io import StringIO
 
 
 def access_json_api():
@@ -9,16 +17,8 @@ def access_json_api():
     Information structure: JSON
     Access technology: API connection over HTTP
 
-    Pros:
-    - Data is structured and easy to parse with Python.
-    - API access can be automated and updated without manual downloads.
-
-    Cons:
-    - Requires internet access.
-    - API limits, endpoint changes, or server errors may break the code.
-
-    Run instruction:
-    - No API key is required for this sample.
+    Pros: Structured, easy to parse, and can be updated automatically.
+    Cons: Requires internet access and may fail if the API changes or has limits.
     """
     url = "https://api.fda.gov/food/enforcement.json?limit=3"
     response = requests.get(url, timeout=10)
@@ -39,16 +39,8 @@ def access_html_over_http():
     Information structure: HTML
     Access technology: Code library reads HTML over HTTP
 
-    Pros:
-    - Useful when data is published as a webpage rather than an API.
-    - Can extract tables or page text from existing public websites.
-
-    Cons:
-    - HTML structure may change and break the scraper.
-    - Web scraping is less stable than using an official API.
-
-    Run instruction:
-    - Requires beautifulsoup4 and requests.
+    Pros: Useful for extracting data from public webpages.
+    Cons: Less stable than APIs because webpage structure may change.
     """
     url = "https://en.wikipedia.org/wiki/Food_safety"
     response = requests.get(url, timeout=10)
@@ -56,29 +48,20 @@ def access_html_over_http():
 
     soup = BeautifulSoup(response.text, "html.parser")
     title = soup.find("h1").get_text(strip=True)
-    first_paragraph = soup.find("p").get_text(strip=True)
+    paragraph = soup.find("p").get_text(strip=True)
 
     print("\n--- HTML Sample: Wikipedia Food Safety Page ---")
     print("Title:", title)
-    print("First paragraph sample:", first_paragraph[:300])
+    print("First paragraph sample:", paragraph[:300])
 
 
 def access_local_csv():
     """
     Information structure: CSV
-    Access technology: Manual file download/read locally
+    Access technology: Manual/local file download and read locally
 
-    Pros:
-    - Simple and reliable after the file is downloaded.
-    - Good for reproducible class projects because the local file does not change unexpectedly.
-
-    Cons:
-    - Manual download adds extra work.
-    - Local files may become outdated if the original data source changes.
-
-    Run instruction:
-    - This sample creates a small local CSV automatically for easy testing.
-    - In a real project, replace sample_food_data.csv with a manually downloaded CSV file.
+    Pros: Simple, stable, and easy to reproduce.
+    Cons: Manual files can become outdated and require extra download steps.
     """
     csv_data = """food_id,food_name,category,safety_status
 1,Apple,Fruit,Safe
