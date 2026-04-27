@@ -35,6 +35,6 @@ This project can be run in:
 
 ## How to Run
 
-Run directly
+ Run directly
 
 
